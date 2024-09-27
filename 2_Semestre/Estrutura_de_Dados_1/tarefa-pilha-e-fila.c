@@ -22,6 +22,8 @@ Tarefa: criação de pilha e fila em linguagem C
 #include <locale.h>
 #include <ctype.h>
 #include <stdbool.h>
+
+//definição do tamanho máximo da pilha/fila
 #define TAM_MAX 10
 
 bool confirmar(char mensagem[100]) {			//imprime uma mensagem na tela e captura um char do teclado, retornando True se char = 'S' e False se char = 'N'
@@ -86,15 +88,14 @@ void inserirPilha(int *ptrPilha, unsigned short *tam_Pilha) {		//insere um valor
 	++*tam_Pilha;								//aumenta em 1 o tamanho da pilha
 }
 
-void removerPilha(int *ptrPilha, unsigned short *tam_Pilha) {		//remove um valor da PILHA
-	--*tam_Pilha;
-	ptrPilha[*tam_Pilha] = 0;
+void removerPilha(int *ptrPilha, unsigned short *tam_Pilha) {		//remove um valor da PILHA, parâmetros são um ponteiro para a pilha em que se deseja remover o elemento e outro ponteiro para o tamanho da pilha
+	--*tam_Pilha;								//remove em 1 o tamanho da pilha
 	puts("O elemento no topo da pilha foi removido!\n");
 }
 
-void exibirTopoPilha(int pilha[TAM_MAX], unsigned short tam_Pilha) {		//exibe o topo da PILHA
+void exibirTopoPilha(int pilha[TAM_MAX], unsigned short tam_Pilha) {			//exibe o topo da PILHA, parâmetros são a pilha cujo topo se deseja imprimir e o tamanho da pilha
 	puts("Índice | Valor | Endereço\n");
-	printf("%hu | %i | %p\n\n", tam_Pilha, pilha[tam_Pilha-1], pilha+tam_Pilha-1);
+	printf("%hu | %i | %p\n\n", tam_Pilha, pilha[tam_Pilha-1], pilha+tam_Pilha-1);		//imprime o índice, o valor e o endereço do elemento no topo
 }
 
 void verificarCheiaVazia(unsigned short tamanho, char tipo[6]) {		//verifica se a PILHA ou a FILA está cheia ou vazia
@@ -105,55 +106,55 @@ void verificarCheiaVazia(unsigned short tamanho, char tipo[6]) {		//verifica se 
 	putchar('\n');
 }
 
-void inserirFila(int *ptrFila, unsigned short *tam_Fila) {		//insere um valor na FILA
+void inserirFila(int *ptrFila, unsigned short *tam_Fila) {		//insere um valor na FILA, parâmetros são um ponteiro para a fila em que se deseja inserir o elemento e outro ponteiro para o tamanho da fila
 	printf("Digite o valor a ser inserido na fila: ");
-	while (!scanf("%i", &ptrFila[*tam_Fila])) {
-		getchar();
-		printf("Digite o valor a ser inserido na fila: ");
-	}
+	while (!scanf("%i", &ptrFila[*tam_Fila])) {				//armazena o input do usuário na fila; se o usuário digitar um char: <-------
+		getchar();							//getchar() para receber o char do stdin				     |
+		printf("Digite o valor a ser inserido na fila: ");		//									     |
+	}									//---------------------------------------------------------------------------
 	system("CLS");
-	printf("O valor %i foi inserido na fila!\n\n", ptrFila[*tam_Fila]);
-	++*tam_Fila;
+	printf("O valor %i foi inserido na fila!\n\n", ptrFila[*tam_Fila]);	//confirma a inserção do elemento na pilha
+	++*tam_Fila;								//aumenta em 1 o tamanho da pilha
 }
 
-void removerFila(int *ptrFila, unsigned short *tam_Fila) {		//remove um valor na FILA
-	--*tam_Fila;
-	for (unsigned i = 0; i < *tam_Fila; i++) {
-		ptrFila[i] = ptrFila[i+1];
+void removerFila(int *ptrFila, unsigned short *tam_Fila) {			//remove um valor da FILA, parâmetros são um ponteiro para a fila em que se deseja remover o elemento e outro ponteiro para o tamanho da fila
+	--*tam_Fila;								//remove em 1 o tamanho da fila
+	for (unsigned i = 0; i < *tam_Fila; i++) {				//loop que passa por toda a fila
+		ptrFila[i] = ptrFila[i+1];					//desloca o elemento 1 valor para a esquerda
 	}
 	puts("O elemento no começo da fila foi removido!\n");
 }
 
-void exibirFila(int fila[TAM_MAX], unsigned short tam_Fila) {		//exibe toda a FILA
+void exibirFila(int fila[TAM_MAX], unsigned short tam_Fila) {		//exibe toda a FILA, parâmetros são a fila que se deseja exibir e o tamanho da fila
 	puts("Índice | Valor | Endereço\n");
-	for (unsigned short i = 0; i < tam_Fila; i++) {
-		printf("%hu | %i | %p\n", i, fila[i], &fila[i]);
+	for (unsigned short i = 0; i < tam_Fila; i++) {				//loop que passa por toda a fila
+		printf("%hu | %i | %p\n", i, fila[i], &fila[i]);		//imprime o índice, o valor e o endereço de cada elemento da fila
 	}
 	putchar('\n');
 }
 
-void buscarFila(int fila[TAM_MAX], unsigned short tam_Fila) {		//busca um valor na FILA
-	int valor;
-	unsigned short i, contador;
-	while (true) {
-		contador = 0;
+void buscarFila(int fila[TAM_MAX], unsigned short tam_Fila) {						//busca um valor na FILA parâmetros são a fila que se deseja exibir e o tamanho da fila
+	int valor;												//armazena o número que o usuário quer buscar
+	unsigned short i, contador;										//i = auxiliar para os loops, contador = conta quantas aparições do valor pesquisado ocorrem na fila
+	while (true) {												//loop infinito (até uma quebra manual - break)
+		contador = 0;											//reseta contador para 0
 		printf("Digite o valor a ser pesquisado (digite 'S' para voltar ao menu principal): ");
-		if (!scanf("%i", &valor)) {
-			if (toupper(getchar()) == 'S') {
-				if (confirmar("Deseja voltar ao menu principal? (S/N)")) break;
+		if (!scanf("%i", &valor)) {									//recebe o valor digitado pelo usuário; se falhar:
+			if (toupper(getchar()) == 'S') {								//se o que foi digitado for um char e esse char for igual a 'S':
+				if (confirmar("Deseja voltar ao menu principal? (S/N)")) break;					//se a função confirmar() retornar verdadeiro, sai do loop infinito
 			}
 		}
-		else {
+		else {												//se não falhar (ou seja, se valor foi capturado com sucesso):
 			putchar('\n');
-			for (i = 0; i < tam_Fila; i++) if (fila[i] == valor) ++contador;
-			if (contador == 0) printf("O valor %i não foi encontrado na pilha!\n", valor);
-			else {
-				if (contador == 1) printf("Há 1 ocorrência de %i na fila. Eis o índice e endereço dessa ocorrência:\n\n", valor);
-				else printf("Há %hu ocorrências de %i na fila. Eis os índices e endereços de cada ocorrência:\n\n", contador, valor);
+			for (i = 0; i < tam_Fila; i++) if (fila[i] == valor) ++contador;				//loop que passa pela fila intera; se o elemento da fila == valor pesquisado aumenta em 1 o contador
+			if (contador == 0) printf("O valor %i não foi encontrado na pilha!\n", valor);			//se contador == 0, não há ocorrências do valor pesquisado
+			else {												//senão:
+				if (contador == 1) printf("Há 1 ocorrência de %i na fila. Eis o índice e endereço dessa ocorrência:\n\n", valor);	//se contador == 1, imprimir mensagem especial
+				else printf("Há %hu ocorrências de %i na fila. Eis os índices e endereços de cada ocorrência:\n\n", contador, valor);	//senão, imprimir mensagem genérica
 				puts("Índice|Valor|Endereço");
-				for (i = 0; i < tam_Fila; i++) {
-					if (fila[i] == valor) {
-						printf("%hu | %i | %p\n", i, fila[i], &fila[i]);
+				for (i = 0; i < tam_Fila; i++) {							//loop que passa por toda a fila
+					if (fila[i] == valor) {								//se valor do elemento da fila == valor pesquisado:
+						printf("%hu | %i | %p\n", i, fila[i], &fila[i]);			//imprimir índice, valor e endereço do elemento
 					}
 				}
 			}
@@ -164,17 +165,26 @@ void buscarFila(int fila[TAM_MAX], unsigned short tam_Fila) {		//busca um valor 
 	}
 }
 
+//função principal
 int main() {
-	setlocale(LC_ALL, "Portuguese");
-	bool exit = false;
-	int pilha[TAM_MAX], fila[TAM_MAX];
-	unsigned short tam_Pilha = 0, tam_Fila = 0;
+	setlocale(LC_ALL, "Portuguese");		//define a linguagem como "Português"
+
+	//declaração de variáveis:
+	bool exit = false;				//variável para testar se a saída do programa foi requisitada
+	int pilha[TAM_MAX], fila[TAM_MAX];		//declaração da pilha e da fila
+	unsigned short tam_Pilha = 0, tam_Fila = 0;	//armazenam, respectivamente, o tamanho da pilha e da fila
 
 	system("CLS");
-	capa();
+	
+	capa();		//exibir capa do programa
+	
 	system("pause");
+
+	//loop
 	do {
 		system("CLS");
+
+		//switch case que testa a opção escolhida pelo usuário
 		switch (menu()) {
 			case 1:
 				if (tam_Pilha == TAM_MAX) puts("A pilha está cheia! Remova ao menos um elemento da pilha para executar essa ação!\n");
@@ -215,7 +225,7 @@ int main() {
 				}
 				break;
 			case 10:
-				if (confirmar("\nVocê deseja encerrar o programa? (S/N)")) exit = true;
+				if (confirmar("Você deseja encerrar o programa? (S/N)")) exit = true;
 				break;
 		}
 		if (exit) {
