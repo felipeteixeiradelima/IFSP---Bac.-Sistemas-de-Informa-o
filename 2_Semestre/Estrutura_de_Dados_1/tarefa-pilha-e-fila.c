@@ -24,18 +24,18 @@ Tarefa: criação de pilha e fila em linguagem C
 #include <stdbool.h>
 #define TAM_MAX 10
 
-bool confirmar(char mensagem[100]) {
-	char resposta;
-	do {
-		puts(mensagem);
-		scanf(" %c", &resposta);
-		resposta = toupper(resposta);
-	} while(!(resposta == 'S' || resposta == 'N'));
-	if (resposta == 'S') return true;
-	else return false;
+bool confirmar(char mensagem[100]) {			//imprime uma mensagem na tela e captura um char do teclado, retornando True se char = 'S' e False se char = 'N'
+	char resposta;						//char que armazena o input do usutário
+	do {						//<----------------------------------------------------------------------------
+		puts(mensagem);					//imprime a mensagem						       |
+		scanf(" %c", &resposta);			//captura o char do teclado					       |
+		resposta = toupper(resposta);			//torna a resposta maiúscula (caso o usuário digite char minúsculo)    |
+	} while(!(resposta == 'S' || resposta == 'N'));		//se o char for diferente de 'S' e 'N', repete o processo -------------
+	if (resposta == 'S') return true;			//se resposta = 'S' retorna True
+	else return false;					//senão retorna Fase
 }
 
-void capa() {
+void capa() {		//imprime a capa do programa
 	puts("---------------------------------------------------------------------------");
 	puts("|                                                                         |");
 	puts("| INSTITUTO FEDERAL DE EDUCACAO, CIENCIA E TECNOLOGIA DE SAO PAULO (IFSP) |");
@@ -51,8 +51,8 @@ void capa() {
 	puts("---------------------------------------------------------------------------\n\n");
 }
 
-unsigned short menu() {
-	unsigned short opcao;
+unsigned short menu() {						//imprime o menu principal do programa; captura e retorna um número do usuário que é a opção escolhida
+	unsigned short opcao;						//número para armazenar a opção escolhida
 	puts("Bem vindo ao menu principal!\n");
 	puts("Opções de PILHA:");
 	puts("1. Inserir valor na pilha");
@@ -66,38 +66,38 @@ unsigned short menu() {
 	puts("8. Verificar se a fila está vazia ou cheia");
 	puts("9. Localizar um elemento na fila\n");
 	puts("10. Sair do programa\n");
-	do{
-		opcao = 0;
-		printf("Digite uma opção: ");
-		if (!scanf("%hu", &opcao)) getchar();
-	} while(opcao < 1 || opcao > 10);
+	do{							//<---------------------------------------------------------------------------------------------------
+		opcao = 0;						//reseta o número opcao para 0								      |
+		printf("Digite uma opção: ");				//											      |
+		if (!scanf("%hu", &opcao)) getchar();			//opcao recebe input do usuário; se for um caractere, getchar() para exception handling       |
+	} while(opcao < 1 || opcao > 10);				//se opcao não estiver entre o intervalo [1,10], repete o processo ---------------------------
 	system("CLS");
 	return opcao;
 }
 
-void inserirPilha(int *ptrPilha, unsigned short *tam_Pilha) {
+void inserirPilha(int *ptrPilha, unsigned short *tam_Pilha) {		//insere um valor na PILHA, parâmetros são um ponteiro para a pilha em que se deseja inserir o elemento e outro ponteiro para o tamanho da pilha
 	printf("Digite o valor a ser inserido na pilha: ");
-	while (!scanf("%i", &ptrPilha[*tam_Pilha])) {
-		getchar();
-		printf("Digite o valor a ser inserido na pilha: ");
-	}
+	while (!scanf("%i", &ptrPilha[*tam_Pilha])) {				//armazena o input do usuário na pilha; se o usuário digitar um char: <------
+		getchar();							//getchar() para receber o char do stdin				     |
+		printf("Digite o valor a ser inserido na pilha: ");		//									     |
+	}									//---------------------------------------------------------------------------
 	system("CLS");
-	printf("O valor %i foi inserido na pilha!\n\n", ptrPilha[*tam_Pilha]);
-	++*tam_Pilha;
+	printf("O valor %i foi inserido na pilha!\n\n", ptrPilha[*tam_Pilha]);	//confirma a inserção do elemento na pilha
+	++*tam_Pilha;								//aumenta em 1 o tamanho da pilha
 }
 
-void removerPilha(int *ptrPilha, unsigned short *tam_Pilha) {
+void removerPilha(int *ptrPilha, unsigned short *tam_Pilha) {		//remove um valor da PILHA
 	--*tam_Pilha;
 	ptrPilha[*tam_Pilha] = 0;
 	puts("O elemento no topo da pilha foi removido!\n");
 }
 
-void exibirTopoPilha(int pilha[TAM_MAX], unsigned short tam_Pilha) {
+void exibirTopoPilha(int pilha[TAM_MAX], unsigned short tam_Pilha) {		//exibe o topo da PILHA
 	puts("Índice | Valor | Endereço\n");
 	printf("%hu | %i | %p\n\n", tam_Pilha, pilha[tam_Pilha-1], pilha+tam_Pilha-1);
 }
 
-void verificarCheiaVazia(unsigned short tamanho, char tipo[6]) {
+void verificarCheiaVazia(unsigned short tamanho, char tipo[6]) {		//verifica se a PILHA ou a FILA está cheia ou vazia
 	if (tamanho == 0) printf("A %s está vazia!\n", tipo);
 	else if (tamanho == 1) printf("A %s ainda não está cheia! No momento, ela possui 1 elemento.\n", tipo);
 	else if (tamanho < TAM_MAX) printf("A %s ainda não está cheia! No momento, ela possui %hu elementos.\n", tipo, tamanho);
@@ -105,7 +105,7 @@ void verificarCheiaVazia(unsigned short tamanho, char tipo[6]) {
 	putchar('\n');
 }
 
-void inserirFila(int *ptrFila, unsigned short *tam_Fila) {
+void inserirFila(int *ptrFila, unsigned short *tam_Fila) {		//insere um valor na FILA
 	printf("Digite o valor a ser inserido na fila: ");
 	while (!scanf("%i", &ptrFila[*tam_Fila])) {
 		getchar();
@@ -116,7 +116,7 @@ void inserirFila(int *ptrFila, unsigned short *tam_Fila) {
 	++*tam_Fila;
 }
 
-void removerFila(int *ptrFila, unsigned short *tam_Fila) {
+void removerFila(int *ptrFila, unsigned short *tam_Fila) {		//remove um valor na FILA
 	--*tam_Fila;
 	for (unsigned i = 0; i < *tam_Fila; i++) {
 		ptrFila[i] = ptrFila[i+1];
@@ -124,7 +124,7 @@ void removerFila(int *ptrFila, unsigned short *tam_Fila) {
 	puts("O elemento no começo da fila foi removido!\n");
 }
 
-void exibirFila(int fila[TAM_MAX], unsigned short tam_Fila) {
+void exibirFila(int fila[TAM_MAX], unsigned short tam_Fila) {		//exibe toda a FILA
 	puts("Índice | Valor | Endereço\n");
 	for (unsigned short i = 0; i < tam_Fila; i++) {
 		printf("%hu | %i | %p\n", i, fila[i], &fila[i]);
@@ -132,7 +132,7 @@ void exibirFila(int fila[TAM_MAX], unsigned short tam_Fila) {
 	putchar('\n');
 }
 
-void buscarFila(int fila[TAM_MAX], unsigned short tam_Fila) {
+void buscarFila(int fila[TAM_MAX], unsigned short tam_Fila) {		//busca um valor na FILA
 	int valor;
 	unsigned short i, contador;
 	while (true) {
