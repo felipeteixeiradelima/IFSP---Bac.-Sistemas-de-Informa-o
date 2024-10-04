@@ -225,15 +225,17 @@ int main() {
 				}
 				break;
 			case 10:
+				//se o usuário confirmar a saída, exit = true
 				if (confirmar("Você deseja encerrar o programa? (S/N)")) exit = true;
 				break;
 		}
+		//se exit == true, imprime na tela mensagem confirmando saída do programa
 		if (exit) {
 			system("CLS");
 			puts("Encerrando o programa...\n");
 		}
 		system("pause");
-	} while(!exit);
+	} while(!exit);		//executa o loop enquanto exit == false
 
 	system("CLS");
 	return 0;
