@@ -1,3 +1,22 @@
+/*
+     ___  ______  ______  ______
+    /  / /  ___/ /  ___/ / __  /
+   /  / /  /__  /  /__  / /_/ /
+  /  / /  ___/ /__   / /  ___/
+ /  / /  /    ___/  / /  /
+/__/ /__/    /_____/ /__/
+
+
+INSTITUTO FEDERAL DE EDUCACAO, CIENCIA E TECNOLOGIA DE SAO PAULO (IFSP)
+
+SPODEOO - Desenvolvimento Orientado a Objetos | Profª Natalia Patricia Montanher
+
+Aluno: Felipe Teixeira de Lima
+RA: SP3515048
+
+Tarefa: lista de exercícios em java básico
+*/
+
 import java.util.Scanner;
 
 public class Main {
