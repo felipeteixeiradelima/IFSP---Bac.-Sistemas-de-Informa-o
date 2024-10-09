@@ -21,7 +21,7 @@ Tarefa: Criação de Classe no Java
 public class Main {
 
     //método main
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         //criando o objeto/instância carro1
         Carro carro1 = new Carro("VW", "Fusca", "Azul", 1980);
 
