@@ -23,10 +23,10 @@ struct listadupla {
 //criação dos ponteiros pilha (inicio da pilha) e topoPilha (final da pilha)
 struct listasimples *pilha, *topoPilha;
 
-int isPilhaCheia(struct listasimples *p) {
+int isPilhaCheia() {
     unsigned int contador = 0;
     struct listasimples *aux;
-    aux = p;
+    aux = pilha;
     
     while (aux->prox != NULL){
         contador++;
@@ -41,7 +41,7 @@ int isPilhaCheia(struct listasimples *p) {
 }
 
 //função de inserir na pilha
-int inserirPilha(struct listasimples *topo) {
+int inserirPilha() {
 
     //se a pilha estiver cheia (TAM_MAX) retorna 0
     if (isPilhaCheia(pilha)) return 0;
@@ -51,41 +51,42 @@ int inserirPilha(struct listasimples *topo) {
     aux = (struct listasimples*) malloc(sizeof(struct listasimples));
     
     scanf("%d", &aux->valor);
+    aux->prox = NULL;
     
     //topo->prox aponta para o novo topo
-    topo->prox = aux;
+    topoPilha->prox = aux;
     
     //topo recebe aux (novo topo)
-    topo = topo->prox;
-    topo->prox = NULL;
+    topoPilha = aux;
     
     //limpa o ponteiro aux
     //aux = NULL;
     //free(aux);
-    topo+=10;
-    printf("\n%i %p %p\n", topo->valor, topo->prox, topo);
+    
+    printf("\naux - inserir: %i %p %p\n", aux->valor, aux->prox, aux);
+    printf("\ntopoPilha - inserir: %i %p %p\n", topoPilha->valor, topoPilha->prox, topoPilha);
     //retorna 1 indicando sucesso
     return 1;
 }
 
 //função de remover da pilha
-int removerPilha(struct listasimples *p, struct listasimples *topo) {
+int removerPilha() {
     //se a pilha estiver vazia retorna 0
-    if (p->prox == NULL) return 0;
+    if (pilha->prox == NULL) return 0;
     
     struct listasimples *aux, *aux2;
-    aux = p;
+    aux = pilha;
     
     //achar o penultimo item da pilha (1 antes do topo) e atribuir a aux
-    while (aux->prox != topo) aux = aux->prox;
+    while (aux->prox != topoPilha) aux = aux->prox;
     
     //trocar o topo com o aux
     aux2 = aux;
-    aux = topo;
-    topo = aux2;
+    aux = topoPilha;
+    topoPilha = aux2;
     
     //remover o proximo do topo
-    topo->prox = NULL;
+    topoPilha->prox = NULL;
     
     //limpar os ponteiros
     aux2 = NULL;
@@ -97,20 +98,21 @@ int removerPilha(struct listasimples *p, struct listasimples *topo) {
 }
 
 //função para exibir a pilha
-int exibirPilha(struct listasimples *p) {
+int exibirPilha() {
     //se a pilha estiver vazia retorna 0 indicando erro
-    if (p->prox == NULL) return 0;
+    if (pilha->prox == NULL) return 0;
     
     //criação de um ponteiro auxiliar
     struct listasimples *aux;
     
     //aux recebe o início da pilha
-    aux = p;
+    aux = pilha;
     
     //exibe todos os elementos da pilha (valor e endereço)
-    do {
+    while (aux->prox != NULL) {
         printf("%i %p", aux->valor, aux);
-    } while (aux->prox != NULL);
+        aux = aux->prox;
+    }
     
     //limpa o ponteiro aux
     aux = NULL;
@@ -155,7 +157,7 @@ int main() {
                 if (!exibirPilha(pilha)) puts("A pilha está vazia!\n");
                 break;
         }
-        printf("\n%i %p %p\n\n", topoPilha->valor, topoPilha->prox, topoPilha);
+        printf("\ntopoPilha - main: %i %p %p\n\n", topoPilha->valor, topoPilha->prox, topoPilha);
     } while (opcao != 4);
     
 }
