@@ -1,5 +1,5 @@
 /*
-Programa que simula o funcionamento de listas
+Programa que simula o funcionamento de uma pilha
 */
 
 #include <stdio.h>
@@ -57,6 +57,8 @@ int inserirPilha() {
     //se a pilha estiver cheia (TAM_MAX) retorna 2 indicando erro
     if (isPilhaCheia()) return 2;
     
+    printf("Digite o valor a ser inserido na pilha: ");
+
     //se a pilha estiver vazia
     if (!topoPilha) {
         scanf("%d", &pilha->valor);
@@ -77,11 +79,8 @@ int inserirPilha() {
 
         //topo recebe aux (novo topo)
         topoPilha = aux;
-        
-        if (aux) printf("\naux - inserir: %i %p %p\n", aux->valor, aux->prox, aux);
     }
     
-    printf("\ntopoPilha - inserir: %i %p %p\n", topoPilha->valor, topoPilha->prox, topoPilha);
     //retorna 0 indicando sucesso
     return 0;
 }
@@ -133,6 +132,8 @@ int exibirPilha() {
     //se a pilha estiver vazia retorna 2 indicando erro
     if (!topoPilha) return 2;
     
+    puts("Valor | Endereço");
+
     //caso haja apenas 1 elemento na pilha
     if (topoPilha == pilha) {
         printf("%i %p\n", pilha->valor, pilha);
@@ -148,11 +149,13 @@ int exibirPilha() {
 
         //exibe todos os elementos da pilha (valor e endereço)
         do {
-            printf("%i %p\n", aux->valor, aux);
+            printf("%i | %p\n", aux->valor, aux);
             aux = aux->prox;
         } while (aux);
     }
     
+    putchar('\n');
+
     //retorna 0 indicando sucesso
     return 0;
 }
@@ -169,7 +172,7 @@ unsigned short getOption() {
 }
 
 //função para limpar a pilha
-int limparPilha () {
+int excluirPilha() {
     //se a pilha não tiver sido inicializada, retorna 1 indicando erro
     if (!pilha) return 1;
 
@@ -214,9 +217,10 @@ int main() {
         puts("2. Inserir");
         puts("3. Remover");
         puts("4. Exibir");
-        puts("5. Limpar pilha");
+        puts("5. Excluir pilha");
         puts("6. Sair\n");
         opcao = getOption();
+        putchar('\n');
         switch (opcao) {
             
             //caso opcao = 1 (iniciar pilha)
@@ -226,7 +230,7 @@ int main() {
                 if (iniciarPilha()) puts("A pilha já foi inicializada!\n");
 
                 //se sucesso, imprime que a pilha foi inicializada
-                puts("Pilha inicializada com sucesso!\n");
+                else puts("Pilha inicializada com sucesso!\n");
                 
                 break;
             
@@ -245,12 +249,12 @@ int main() {
                     //erro 2 = pilha cheia
                     case 2:
                         puts("A pilha está cheia!");
-                        puts("Remova um item da pilha para realizar essa ação!");
+                        puts("Remova um item da pilha para realizar essa ação!\n");
                         break;
                     
                     //sucesso (não houve erro)
                     default:
-                        puts("Valor inserido na pilha com sucesso!");
+                        puts("Valor inserido na pilha com sucesso!\n");
                         break;
                 }
                 break;
@@ -269,12 +273,12 @@ int main() {
                     //erro 2 = pilha vazia
                     case 2:
                         puts("A pilha está vazia!");
-                        puts("Insira um item na pilha para realizar essa ação!");
+                        puts("Insira um item na pilha para realizar essa ação!\n");
                         break;
                     
                     //sucesso (não houve erro)
                     default:
-                        puts("Valor no topo da pilha removido com sucesso!");
+                        puts("Valor no topo da pilha removido com sucesso!\n");
                         break;
                 }
                 break;
@@ -302,21 +306,18 @@ int main() {
             case 5:
             
                 //se return = 1 erro: a pilha ainda não foi inicializada
-                if (limparPilha()) {
+                if (excluirPilha()) {
                     puts("A pilha ainda não foi inicializada!");
                     puts("Inicie a pilha no menu principal para realizar essa ação!\n");
                 }
                 
                 //senão, sucesso
-                else {
-                    puts("A pilha foi limpa com sucesso!\n");
-                }
-                
+                else puts("A pilha foi excluída!\n");
                 break;
-
         }
-        if (topoPilha) printf("\ntopoPilha - main: %i %p %p\n\n", topoPilha->valor, topoPilha->prox, topoPilha);
     } while (opcao != 6);
+
+    puts("Encerrando o programa...\n");
 
     return 0;
 }
