@@ -72,7 +72,7 @@ int main() {
 
         Resultado resultado = gerarResultado(contador, vetor_completo);
 
-        printf("O tempo decorrido para organizar %i ELEMENTOS foi de %.5f SEGUNDOS\n\n", resultado.tamanho_vetor, resultado.tempo_decorrido);
+        printf("O tempo decorrido para organizar %i ELEMENTOS foi de %f SEGUNDOS\n\n", resultado.tamanho_vetor, resultado.tempo_decorrido);
 
         system("pause");
     }
