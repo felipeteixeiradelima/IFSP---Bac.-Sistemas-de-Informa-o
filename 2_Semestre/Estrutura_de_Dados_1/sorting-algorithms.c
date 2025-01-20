@@ -38,13 +38,9 @@ int trocarValores(int* a, int*b) {
 
 // BUBBLE SORT
 int bubbleSort(int vetor[], unsigned int tam_vetor) {
-    int aux;
-
-    for (int i = tam_vetor-1; i > 0; i--) {
-        for (int j = 0; j < i; j++) {
-            if (vetor[i] < vetor[j]) {
-                trocarValores(&vetor[i], &vetor[j]);
-            }
+    for (unsigned int i = 0; i < tam_vetor; i++) {
+        for (unsigned short j = 0; j < tam_vetor - i - 1; j++) {
+            if (vetor[j] > vetor [j+1]) trocarValores(&vetor[j],&vetor[j+1]);
         }
     }
 }
